@@ -68,7 +68,11 @@ def configure_env(relative=False):
         # str(os.popen('/usr/local/bin/redis-cli script load "$(cat {})"'
         # .format(lua_script_path)).read())
         subprocess.check_output(
-            'redis-cli script load "$(cat {})"'.format(lua_script_path), shell=True
+            # 'redis-cli -h {host} script load "$(cat {script})"'.format(
+            #     host=os.environ["SIMENGINE_REDIS_HOST"], script=lua_script_path
+            # ),
+            'redis-cli script load "$(cat {})"'.format(lua_script_path),
+            shell=True,
         ).decode("utf-8"),
     )
 
