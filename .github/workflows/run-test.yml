@@ -25,7 +25,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ./venv
-          key: v1-dependencies-${{ hashFiles('requirements.txt') }}
+          key: "v1-dependencies\
+            -${{ hashFiles('requirements.txt') }}\
+            -${{ hashFiles('setup.py') }}"
 
       - name: Installing SimEngine plugin library
         run: |
