@@ -37,7 +37,7 @@ def get_set_stm(
         node_name: name given to a graph node (node to be updated)
         supported_attr: valid node properties, used for filtering out attributes
     Returns:
-        str: set statement formatted for neo4j query 
+        str: set statement formatted for neo4j query
     """
 
     existing = dict(

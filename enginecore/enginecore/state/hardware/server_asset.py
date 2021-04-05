@@ -63,7 +63,7 @@ class Server(StaticAsset):
     def _psu_drawing_extra(self, psu_sm):
         """Check if a particular psu is drawing extra power
         Returns:
-            boolean: True if psu is drawing above the expected value 
+            boolean: True if psu is drawing above the expected value
                      (meaning it is taking over someone else's load)
         """
 
@@ -332,7 +332,7 @@ class ServerWithBMC(Server):
         that occur outside of engine's control
         & notifies main event loop of power update.
         Note that this only tracks down when a vm is powered off.
-        
+
         This method should be run in a thread,
         monitoring can be stopped by setting stop event;
         """
@@ -572,8 +572,7 @@ class PSU(StaticAsset):
 
     @handler("ChildLoadUpEvent", "ChildLoadDownEvent", priority=1)
     def update_load_sensors(self, event, *args, **kwargs):
-        """Change values of BMC sensors associated with load
-        """
+        """Change values of BMC sensors associated with load"""
         self._update_load_sensors(event.load.new)
 
     @handler("InputVoltageUpEvent")

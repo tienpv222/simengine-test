@@ -30,8 +30,8 @@ def storage_command(storage_group):
 
 
 def get_ctrl_storage_args():
-    """Group together storage related args 
-    (most storage commands require at least server asset key and controller number) 
+    """Group together storage related args
+    (most storage commands require at least server asset key and controller number)
     """
 
     # group a few args into a common parent element

@@ -28,7 +28,7 @@ class WebSocket(Component):
     - cli client & enginecore (see state_client.py)
 
     WebSocket also manages action recorder, handles replay requests
-    
+
     WebSocket is added as event tracker to the engine so any completion
     events dispatched by engine are passed to websocket client
     """
@@ -351,7 +351,7 @@ class WebSocket(Component):
     # pylint: disable=unused-argument
     @handler("AssetPowerEvent")
     def on_asset_power_change(self, event, *args, **kwargs):
-        """Handle engine events by passing updates to 
+        """Handle engine events by passing updates to
         server clients"""
         if not event or event.asset is None:
             return
@@ -409,12 +409,12 @@ class WebSocket(Component):
     # pylint: enable=unused-argument
 
     def _notify_clients(self, data):
-        """This handler is called upon state changes 
-        and is meant to notify web-client of any events 
-        
+        """This handler is called upon state changes
+        and is meant to notify web-client of any events
+
         Args:
-            data: data to be sent to ws clients 
-                  must be in a format: 
+            data: data to be sent to ws clients
+                  must be in a format:
                 {
                     "request": <ServerToClientRequests.request.name>,
                     "payload": <data>
