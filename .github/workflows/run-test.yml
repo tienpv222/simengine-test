@@ -81,7 +81,9 @@ jobs:
     runs-on: ubuntu-latest
     container: node
 
-    working_directory: ./dashboard/frontend
+    defaults:
+      run:
+        working-directory: ./dashboard/frontend
 
     steps:
       - name: checkout
