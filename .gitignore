@@ -1,0 +1,26 @@
+# Python Ignores
+*.pyc
+*.pyo
+__pycache__
+venv*
+
+# JavaScript
+node_modules/
+.env
+*.log
+
+# Editor Preferences
+.vscode
+
+# Redis
+dump.rdb
+
+# nohup
+nohup.out
+
+# Frontend
+prebuild
+public
+
+# misc
+.todos.json

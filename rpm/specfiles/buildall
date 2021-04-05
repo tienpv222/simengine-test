@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# buildall :: builds the specfiles in the current dir
+#
+# Assumes a Fedora system
+#
+
+echo "This script builds a set of RPMs for simengine."
+echo "Note: it is recommended that you wipe previous builds"
+echo "before running this script."
+echo
+echo "sudo permission is requested for the installation"
+echo "of required RPM tools."
+
+sudo dnf install -y "@RPM Development Tools"
+rpmdev-setuptree 2>/dev/null
+
+cp \
+	-v \
+	patches/*.patch \
+	$(rpm --eval "%{_topdir}/SOURCES/")
+
+for X in *.spec
+do
+	echo ================== $X
+	spectool -g -R $X
+	sudo dnf builddep -y $X
+	if rpmbuild -ba $X 
+	then
+		echo "$(basename $0): Build of $X completed"
+	else
+		echo "$(basename $0): Build of $X failed" >&2
+		exit 1
+	fi
+done
+echo
+echo "Output RPMS will be in $(rpm --eval "%{_topdir}/RPMS")"
+echo "Output SRPMS will be in $(rpm --eval "%{_topdir}/SRPMS")"
+

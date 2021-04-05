@@ -1,0 +1,7 @@
+*.egg-info
+build
+dist
+env
+.pypirc
+*.rdb
+info.log*

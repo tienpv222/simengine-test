@@ -1,0 +1,11 @@
+[Unit]
+Description=Open SNMP and IPMI ports on host's firewall
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=
+
+[Install]
+WantedBy=multi-user.target

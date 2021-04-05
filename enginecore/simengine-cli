@@ -1,0 +1,98 @@
+#!/usr/bin/python3
+""" Command line interface for enginecore """
+# disable all-caps constant name
+# pylint: disable=C0103
+
+import argparse
+import sys
+
+import neo4j.exceptions as db_error
+
+from enginecore import cli
+from enginecore.state.net.state_client import StateClient
+from enginecore.state.api import IStateManager
+
+################ Define Command line options & arguments
+
+## set-up top level params
+argparser = argparse.ArgumentParser(
+    description="Simengine CLI provides a set of management tools for the engine core"
+)
+subparsers = argparser.add_subparsers()
+argparser.add_argument("--version", action="version", version="%(prog)s 2.0")
+
+## set-up the commands (status/power etc..)
+cli.status_command(
+    subparsers.add_parser("status", help="Retrieve status of registered asset(s)")
+)
+cli.power_command(
+    subparsers.add_parser(
+        "power", help="Control power component of registered asset(s)"
+    )
+)
+cli.thermal_command(
+    subparsers.add_parser(
+        "thermal", help="Manage temperature/thermal settings of the system"
+    )
+)
+cli.storage_command(
+    subparsers.add_parser("storage", help="Manage storage state of the system")
+)
+cli.configure_command(
+    subparsers.add_parser(
+        "configure-state", help="Update runtime state of the assets/sensors"
+    )
+)
+cli.model_command(
+    subparsers.add_parser(
+        "model", help="Manage system model: create new/update existing asset etc."
+    )
+)
+cli.play_command(
+    subparsers.add_parser("play", help="Manage and execute playback scenarios")
+)
+cli.actions_command(
+    subparsers.add_parser(
+        "actions", help="Record and replay actions performed by the engine"
+    )
+)
+
+try:
+    options = vars(argparser.parse_args())
+
+    # if validation is present
+    if "validate" in options:
+        options["validate"](options)
+        del options["validate"]
+
+    # check if key is valid
+    if (
+        "asset_key" in options
+        and options["asset_key"]
+        and not IStateManager.asset_exists(options["asset_key"])
+        and "new_asset" not in options
+    ):
+        raise argparse.ArgumentTypeError(
+            'Asset under key "{}" does not exist!'.format(options["asset_key"])
+        )
+
+    # execute action associated with the CLI command
+    if "func" in options:
+        # remove func from cli attributes & execute it
+        cmd_callback = options["func"]
+        del options["func"]
+        cmd_callback(options)
+    else:
+        argparser.print_help()
+
+except db_error.ConstraintError as error:
+    print("Database constraint was violated: ")
+    print(error, file=sys.stderr)
+
+except ConnectionRefusedError as conn_err:
+    print(conn_err, file=sys.stderr)
+    print("  Error connecting to socket server at:", file=sys.stderr)
+    print(" ", StateClient.get_connection_str(), file=sys.stderr)
+
+except argparse.ArgumentTypeError as error:
+    print(error, file=sys.stderr)

@@ -1,0 +1,37 @@
+{
+    "virtualDrive": {
+        "Optl": {
+            "numPdOffline": 0,
+            "numPdRebuilding": -1,
+            "mediaErrorCount": -1,
+            "otherErrorCount": -1,
+            "predictiveErrorCount": -1
+        },
+        "Pdgd": {
+            "numPdOffline": 1,
+            "numPdRebuilding": 1,
+            "mediaErrorCount": -1,
+            "otherErrorCount": -1,
+            "predictiveErrorCount": -1
+        },
+        "Dgrd": {
+            "numPdOffline": 2,
+            "numPdRebuilding": 1,
+            "mediaErrorCount": -1,
+            "otherErrorCount": -1,
+            "predictiveErrorCount": 10
+        }
+    },
+    "controller": {
+        "Optimal": {
+            "vdDgd": 0,
+            "memoryCorrectableErrors": -1,
+            "memoryUncorrectableErrors": -1
+        },
+        "Needs Attention": {
+            "vdDgd": 1,
+            "memoryCorrectableErrors": -1,
+            "memoryUncorrectableErrors": -1
+        }
+    }
+}
