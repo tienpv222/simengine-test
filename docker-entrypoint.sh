@@ -1,35 +1,38 @@
 #!/bin/sh
 
-# Start redis
-redis-server --daemonize yes
+echo "test"
+exit 0
 
-# Reset neo4j password
-rm -f /var/lib/neo4j/data/dbms/auth
-neo4j-admin set-initial-password neo4j-simengine
+# # Start redis
+# redis-server --daemonize yes
 
-# Start neo4j
-neo4j start
-sleep 10
-neo4j status
+# # Reset neo4j password
+# rm -f /var/lib/neo4j/data/dbms/auth
+# neo4j-admin set-initial-password neo4j-simengine
 
-# Create account for simegine
-cypher-shell -u neo4j -p neo4j-simengine \
-      "CALL dbms.security.createUser('simengine', 'simengine', false);"
+# # Start neo4j
+# neo4j start
+# sleep 10
+# neo4j status
 
-# Keep container running until neo4j dies
-while \
-  kill \
-    -0 \
-    $( \
-      neo4j status \
-      | sed \
-        --regexp-extended \
-        --quiet \
-        's/^.*pid[[:space:]]+([0-9]+).*$/\1/p' \
-    ) \
-    >/dev/null \
-    2>&1
+# # Create account for simegine
+# cypher-shell -u neo4j -p neo4j-simengine \
+#       "CALL dbms.security.createUser('simengine', 'simengine', false);"
 
-  do
-    sleep 5;
-  done
+# # Keep container running until neo4j dies
+# while \
+#   kill \
+#     -0 \
+#     $( \
+#       neo4j status \
+#       | sed \
+#         --regexp-extended \
+#         --quiet \
+#         's/^.*pid[[:space:]]+([0-9]+).*$/\1/p' \
+#     ) \
+#     >/dev/null \
+#     2>&1
+
+#   do
+#     sleep 5;
+#   done
