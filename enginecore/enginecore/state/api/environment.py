@@ -147,7 +147,7 @@ class ISystemEnvironment:
     def get_voltage_props(cls) -> dict:
         """Get runtime voltage properties (ambient behaviour description)
         Returns:
-            voltage fluctuation properties such as method being used (normal/gauss) 
+            voltage fluctuation properties such as method being used (normal/gauss)
             & properties associated with the random method
         """
         graph_ref = GraphReference()

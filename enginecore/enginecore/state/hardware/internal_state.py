@@ -80,8 +80,8 @@ class UPSStateManager(state_api.IUPSStateManager, StateManager):
         self._publish_battery(old_charge_level, charge_level)
 
     def update_load(self, load):
-        """Update any load state associated with the device in the redis db 
-        
+        """Update any load state associated with the device in the redis db
+
         Args:
             load(float): New load in amps
         """
@@ -92,7 +92,7 @@ class UPSStateManager(state_api.IUPSStateManager, StateManager):
 
     def update_time_on_battery(self, timeticks):
         """Update OIDs associated with UPS time on battery
-        
+
         Args:
             timeticks(int): time-on battery (seconds*100)
         """
@@ -101,7 +101,7 @@ class UPSStateManager(state_api.IUPSStateManager, StateManager):
     def update_time_left(self, timeticks):
         """Update OIDs associated with UPS runtime
         (estimation of how long UPS will be operating)
-        
+
         Args:
             timeticks(int): time left
         """
@@ -127,7 +127,7 @@ class UPSStateManager(state_api.IUPSStateManager, StateManager):
 
     def _update_current_oids(self, load):
         """Update OIDs associated with UPS Output - Current in AMPs
-        
+
         Args:
             load(float): new load in AMPs
         """
@@ -141,7 +141,7 @@ class UPSStateManager(state_api.IUPSStateManager, StateManager):
 
     def _update_load_perc_oids(self, load):
         """Update OIDs associated with UPS Output - % of the power capacity
-        
+
         Args:
             load(float): new load in AMPs
         """
@@ -160,7 +160,7 @@ class UPSStateManager(state_api.IUPSStateManager, StateManager):
 
     def _update_battery_oids(self, charge_level, old_level):
         """Update OIDs associated with UPS Battery
-        
+
         Args:
             charge_level(int): new battery level (between 0 & 1000)
         """
@@ -189,7 +189,7 @@ class UPSStateManager(state_api.IUPSStateManager, StateManager):
         """Update oids associated with UPS voltage
         Args:
             voltage: new voltage value
-        Returns: 
+        Returns:
             tuple: true if transfer to battery is needed, transfer reason
                    (see state.api.ups.UPS.InputLineFailCause)
         Raises:
@@ -295,8 +295,8 @@ class PDUStateManager(state_api.IPDUStateManager, StateManager):
         self._update_oid_value(oid, snmp_data_types.Integer32(max(wattage, 0)))
 
     def update_load(self, load):
-        """Update any load state associated with the device in the redis db 
-        
+        """Update any load state associated with the device in the redis db
+
         Args:
             load(float): New load in amps
         """
@@ -327,8 +327,8 @@ class OutletStateManager(state_api.IOutletStateManager, StateManager):
         return 0
 
     def set_parent_oid_states(self, state):
-        """Bulk-set parent oid values 
-        
+        """Bulk-set parent oid values
+
         Args:
             state(OutletState): new parent(s) state
         """

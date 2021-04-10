@@ -23,7 +23,7 @@ class AllThermalBranchesDone(Event):
 
 class AllVoltageBranchesDone(Event):
     """Dispatched when power iteration finishes downstream
-    voltage event propagation to all the leaf nodes that 
+    voltage event propagation to all the leaf nodes that
     are descendants of the iteration source event"""
 
     success = True

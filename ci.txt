@@ -1,0 +1,20 @@
+7:C 10 Apr 2021 15:23:49.050 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+7:C 10 Apr 2021 15:23:49.050 # Redis version=5.0.9, bits=64, commit=00000000, modified=0, pid=7, just started
+7:C 10 Apr 2021 15:23:49.050 # Configuration loaded
+Changed password for user 'neo4j'.
+Active database: graph.db
+Directories in use:
+  home:         /var/lib/neo4j
+  config:       /etc/neo4j
+  logs:         /var/log/neo4j
+  plugins:      /var/lib/neo4j/plugins
+  import:       /var/lib/neo4j/import
+  data:         /var/lib/neo4j/data
+  certificates: /var/lib/neo4j/certificates
+  run:          /var/run/neo4j
+Starting Neo4j.
+Started neo4j (pid 156). It is available at http://localhost:7474/
+There may be a short delay until the server is ready.
+See /var/log/neo4j/neo4j.log for current status.
+Neo4j is running at pid 156
+/simengine_setup/repo/enginecore

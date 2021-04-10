@@ -1,23 +1,28 @@
 #!/bin/sh
 
-echo "test"
-exit 0
+# which python2
 
-# # Start redis
-# redis-server --daemonize yes
+# $(black --check .)
+# $(echo pwd)
+# $(python3 -m unittest discover ./repo/enginecore/tests)
 
-# # Reset neo4j password
-# rm -f /var/lib/neo4j/data/dbms/auth
-# neo4j-admin set-initial-password neo4j-simengine
+# echo "running"
 
-# # Start neo4j
-# neo4j start
-# sleep 10
-# neo4j status
+# Start redis
+redis-server --daemonize yes
 
-# # Create account for simegine
-# cypher-shell -u neo4j -p neo4j-simengine \
-#       "CALL dbms.security.createUser('simengine', 'simengine', false);"
+# Reset neo4j password
+rm -f /var/lib/neo4j/data/dbms/auth
+neo4j-admin set-initial-password neo4j-simengine
+
+# Start neo4j
+neo4j start
+sleep 10
+neo4j status
+
+# Create account for simegine
+cypher-shell -u neo4j -p neo4j-simengine \
+  "CALL dbms.security.createUser('simengine', 'simengine', false);"
 
 # # Keep container running until neo4j dies
 # while \
@@ -36,3 +41,7 @@ exit 0
 #   do
 #     sleep 5;
 #   done
+cd ./repo/enginecore
+pwd
+# black --check .
+python3 -m unittest discover tests

@@ -27,31 +27,31 @@ class IUPSStateManager(ISnmpDeviceStateManager):
 
             - highLineVoltage(2) -- if the transfer to battery is caused
             by an over voltage greater than the high transfer voltage.
-            
+
             - brownout(3) -- if the duration of the outage is greater than
             five seconds and the line voltage is between 40% of the
             rated output voltage and the low transfer voltage.
-            
+
             - blackout(4) -- if the duration of the outage is greater than five
             seconds and the line voltage is between 40% of the rated
             output voltage and ground.
-            
+
             - smallMomentarySag(5) -- if the duration of the outage is less
             than five seconds and the line voltage is between 40% of the
             rated output voltage and the low transfer voltage.
-            
+
             - deepMomentarySag(6) -- if the duration of the outage is less
             than five seconds and the line voltage is between 40% of the
             rated output voltage and ground.  The variable is set to
-            
+
             - smallMomentarySpike(7) -- if the line failure is caused by a
             rate of change of input voltage less than ten volts per cycle.
-            
+
             - largeMomentarySpike(8) -- if the line failure is caused by
             a rate of change of input voltage greater than ten volts per cycle.
-            
+
             - selfTest(9) -- if the UPS was commanded to do a self test.
-            
+
             - rateOfVoltageChange(10) -- if the failure is due to the rate of change of
             the line voltage.
         """
@@ -214,7 +214,7 @@ class IUPSStateManager(ISnmpDeviceStateManager):
         return powered
 
     def get_config_off_delay(self):
-        """Delay for power-off operation 
+        """Delay for power-off operation
         (unlike 'hardware'-determined delay, this value can be configured by the user)
         """
         oid = self.get_oid_by_name("AdvConfigShutoffDelay")
