@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class IPMIAgent(Agent):
-    """Python wrapper managing ipmi_sim program that takes 
+    """Python wrapper managing ipmi_sim program that takes
     SensorRepository & translates it into ipmi_sim sensor definitions.
     """
 

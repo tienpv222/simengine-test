@@ -21,7 +21,7 @@ def get_temp_workplace_dir():
 
 
 def configure_env(relative=False):
-    """Set-up defaults for the env vars if not defined 
+    """Set-up defaults for the env vars if not defined
     (such as folder containing static .snmprec files, SHA of redis lua script)
 
     Args:

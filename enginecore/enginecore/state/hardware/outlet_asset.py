@@ -31,7 +31,7 @@ class Outlet(Asset):
 
     @handler("SignalDownEvent", priority=1)
     def on_signal_down_received(self, event, *args, **kwargs):
-        """Outlet may have multiple OIDs associated with the state 
+        """Outlet may have multiple OIDs associated with the state
         (if if one is updated, other ones should be updated as well)"""
         self.state.set_parent_oid_states(
             in_state.OutletStateManager.OutletState.switchOff
