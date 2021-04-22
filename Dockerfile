@@ -1,31 +1,48 @@
 # The base image for circleci
-FROM fedora:29
+FROM fedora:32 AS upgrade
 
+WORKDIR /simengine_setup
+# Upgrade Fedora
+RUN dnf upgrade -y
 
-# install simengine-dnf packages
-RUN dnf upgrade -y \
-    && dnf install gzip ca-certificates openssh-server git libvirt libvirt-devel redhat-rpm-config OpenIPMI OpenIPMI-lanserv \
-    OpenIPMI-libs OpenIPMI-devel python3-libvirt gcc redis ipmitool python3-devel python2-devel net-snmp-utils -y \
-    && dnf clean all -y \
-    && python3 -m pip install --upgrade pip \
-    && python2 -m pip install --upgrade pip
+# Install RPM dependencies
+FROM upgrade AS rpm_dependencies
+RUN dnf install -y 'dnf-command(builddep)'
+RUN dnf install -y rpmdevtools
+RUN dnf install -y fedora-packager
+RUN dnf install -y wget
+RUN dnf install -y python3-pip
 
-# install neo4j
-RUN cd /tmp \
-    && dnf install wget -y \
-    && /usr/bin/wget http://debian.neo4j.org/neotechnology.gpg.key \
-    && ls -l \
-    && rpm --import neotechnology.gpg.key \
-    && echo $'[neo4j]\nname=Neo4j RPM Repository\nbaseurl=https://yum.neo4j.org/stable\nenabled=1\ngpgcheck=1\n[neo4j]' >> /etc/yum.repos.d/neo4j.repo \
-    && dnf install neo4j -y \
-    && neo4j start \
-    && sleep 5 \
-    && neo4j status \
-    && echo "CALL dbms.changePassword('neo4j-simengine'); CALL dbms.security.createUser('simengine', 'simengine', false);"| cypher-shell -u neo4j -p neo4j \
-    && dnf clean all -y
+# Add neo4j repo
+FROM rpm_dependencies AS add_neo4j_repo
+COPY ./setup/install-simengine/add-neo4j-repo .
+RUN ./add-neo4j-repo
 
-# simengine installation:
+# Install spec files required packages
+FROM add_neo4j_repo AS specs_requires
+COPY rpm/specfiles/*.spec specfiles/
+RUN dnf builddep specfiles/*.spec -y
+RUN requires_list=($(rpm --requires --specfile specfiles/*.spec | \
+    sed --regexp-extended 's/[[:space:]]+[<>=]+[[:space:]]+/-/')) \
+    && for requires_item in "${requires_list[@]}"; \
+    do echo "DEPENDENCY=[$requires_item]"; sudo dnf --assumeyes install "$requires_item"; done
 
-WORKDIR /usr/src/app
+FROM specs_requires AS pip_dependencies
+# # COPY enginecore/requirements.txt .
+# COPY enginecore/dev-requirements.txt .
+# # RUN pip install -r ./requirements.txt
+# RUN pip install -r ./dev-requirements.txt
 
-LABEL com.circleci.preserve-entrypoint=true
+FROM pip_dependencies AS python2
+RUN dnf install -y python2
+
+FROM python2 AS repo
+COPY . repo
+
+FROM repo AS pip
+RUN cd ./repo/enginecore && pip install -r ./requirements.txt
+RUN pip install -r repo/enginecore/dev-requirements.txt
+
+FROM pip AS entry_point
+COPY docker-entrypoint.sh .
+ENTRYPOINT ["/simengine_setup/docker-entrypoint.sh"]

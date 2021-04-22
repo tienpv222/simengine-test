@@ -1,5 +1,5 @@
 Name:      simengine-database
-Version:   3.33
+Version:   3.36
 Release:   1%{?dist}
 Summary:   SimEngine - Databases
 URL:       https://github.com/Seneca-CDOT/simengine
@@ -10,7 +10,7 @@ License:   GPLv3+
 Source0: https://github.com/Seneca-CDOT/simengine/archive/%{gittag}/simengine-%{version}.tar.gz
 BuildArch: noarch
 
-Requires:  neo4j, cypher-shell, redis, python-neo4j-driver, python-redis
+Requires:  neo4j, cypher-shell, redis, python-neo4j-driver, python-redis, chkconfig
 
 %description
 Installs the SimEngine database configuration for Neo4j.
@@ -37,6 +37,9 @@ sleep 10
 echo "CREATE CONSTRAINT ON (n:Asset) ASSERT (n.key) IS UNIQUE;" | cypher-shell -u simengine -p simengine
 
 %changelog
+* Mon Dec 07 2020 Tsu-ba-me <ynho.li.aa.e@gmail.com> - 3.36-1
+- new version
+
 * Wed May 06 2020 Yanhao Lei <ynho.li.aa.e@gmail.com> - 3.33-1
 - new version
 
